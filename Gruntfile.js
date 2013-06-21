@@ -29,21 +29,11 @@ module.exports = function(grunt) {
     },
 
     // Configuration to be run (and then tested).
-    cuke_tree: {
-      default_options: {
-        options: {
-        },
-        files: {
-          'tmp/default_options': ['test/fixtures/testing', 'test/fixtures/123'],
-        },
-      },
+    cuketree: {
+      default_options: {},
       custom_options: {
         options: {
-          separator: ': ',
-          punctuation: ' !!!',
-        },
-        files: {
-          'tmp/custom_options': ['test/fixtures/testing', 'test/fixtures/123'],
+          config: 'custom',
         },
       },
     },
@@ -65,7 +55,7 @@ module.exports = function(grunt) {
 
   // Whenever the "test" task is run, first clean the "tmp" dir, then run this
   // plugin's task(s), then test the result.
-  grunt.registerTask('test', ['clean', 'cuke_tree', 'nodeunit']);
+  grunt.registerTask('test', ['clean', 'cuketree', 'nodeunit']);
 
   // By default, lint and run all tests.
   grunt.registerTask('default', ['jshint', 'test']);

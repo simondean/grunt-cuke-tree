@@ -17,66 +17,55 @@ Once the plugin has been installed, it may be enabled inside your Gruntfile with
 grunt.loadNpmTasks('grunt-cuke-tree');
 ```
 
-## The "cuke_tree" task
+## cuketree task
 
-### Overview
-In your project's Gruntfile, add a section named `cuke_tree` to the data object passed into `grunt.initConfig()`.
-
-```js
-grunt.initConfig({
-  cuke_tree: {
-    options: {
-      // Task-specific options go here.
-    },
-    your_target: {
-      // Target-specific file lists and/or options go here.
-    },
-  },
-})
-```
+_Run this task with the `grunt cuketree` command._
 
 ### Options
 
-#### options.separator
+#### options.config
 Type: `String`
-Default value: `',  '`
+Default value: `default`
 
-A string value that is used to do something with whatever.
-
-#### options.punctuation
-Type: `String`
-Default value: `'.'`
-
-A string value that is used to do something else with whatever else.
+Name the cuke-tree config file to use with cuke-tree.  cuke-tree will append `.cukeTree.js` to config name when loading the config file.
 
 ### Usage Examples
 
-#### Default Options
-In this example, the default options are used to do something with whatever. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result would be `Testing, 1 2 3.`
+#### Basic Usage
+In this example, cuke-tree will look for a config file with the default file name of `default.cukeTree.js`
 
 ```js
 grunt.initConfig({
-  cuke_tree: {
-    options: {},
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
+  cuketree: {},
+})
+```
+
+#### Custom cuke-tree config file
+In this example, a different config file is specified for cuke-tree.  Specifying `ide` as the config will cause cuke-tree to look for a config file called `ide.cukeTree.js`.
+
+```js
+grunt.initConfig({
+  cuketree: {
+    options: {
+      config: 'ide',
     },
   },
 })
 ```
 
-#### Custom Options
-In this example, custom options are used to do something else with whatever else. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result in this case would be `Testing: 1 2 3 !!!`
+cuke-tree will look for a config file called
+
+#### Multiple cuke-tree config files
+In this example, multiple cuke-tree config files are used.
 
 ```js
 grunt.initConfig({
-  cuke_tree: {
-    options: {
-      separator: ': ',
-      punctuation: ' !!!',
-    },
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
+  cuketree: {
+    run: {},
+    ide: {
+      options: {
+      	config: 'ide',
+      },
     },
   },
 })
@@ -86,4 +75,6 @@ grunt.initConfig({
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
-_(Nothing yet)_
+
+### 0.1.1 
+Initial release

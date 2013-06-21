@@ -31,12 +31,20 @@
     "grunt-contrib-jshint": "~0.1.1",
     "grunt-contrib-clean": "~0.4.0",
     "grunt-contrib-nodeunit": "~0.1.2",
-    "grunt": "~0.4.1"
+    "grunt": "~0.4.1",
+    "myriad-cucumber": "~0.2.0",
+    "cucumber": "~0.3.0"
   },
   "peerDependencies": {
     "grunt": "~0.4.1"
   },
   "keywords": [
-    "gruntplugin"
-  ]
+    "gruntplugin",
+    "cuke-tree",
+    "cuketree"
+  ],
+  "dependencies": {
+    "win-spawn": "~1.1.2",
+    "cuke-tree": "~0.2.16"
+  }
 }
