@@ -8,8 +8,9 @@
 
 'use strict';
 
-var WinSpawn = require('win-spawn');
 var Path = require('path');
+var OS = require('os');
+var ChildProcess = require('child_process');
 
 module.exports = function(grunt) {
 
@@ -26,6 +27,14 @@ module.exports = function(grunt) {
     if (options.config) {
       cuketreeArgs.push('-c');
       cuketreeArgs.push(options.config);
+    }
+
+    // See https://github.com/joyent/node/issues/2318 for the reason that
+    // cmd.exe has to be used on Windows
+    if (OS.type() === 'Windows_NT') {
+      cuketreeArgs.unshift(cuketreeBin.replace(/\//g, '\\'));
+      cuketreeArgs = ['/c', cuketreeArgs.join(' ')];
+      cuketreeBin = 'cmd.exe';
     }
 
     var cuketreeConfig = require(Path.resolve(options.config || 'default') + '.cukeTree.js');
@@ -45,9 +54,7 @@ module.exports = function(grunt) {
       args: cuketreeArgs
     });
 
-    // See https://github.com/joyent/node/issues/2318 for the reason that
-    // win-spawn has to be used instead of child_process
-    var cuketreeProcess = new WinSpawn(cuketreeBin, cuketreeArgs, {
+    var cuketreeProcess = ChildProcess.spawn(cuketreeBin, cuketreeArgs, {
       stdio: ['ignore', 'pipe', 'pipe']
     });
 

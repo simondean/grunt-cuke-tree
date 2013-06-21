@@ -44,7 +44,6 @@
     "cuketree"
   ],
   "dependencies": {
-    "win-spawn": "~1.1.2",
     "cuke-tree": "~0.2.16"
   }
 }
