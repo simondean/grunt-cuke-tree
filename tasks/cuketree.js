@@ -58,22 +58,18 @@ module.exports = function(grunt) {
       stdio: ['ignore', 'pipe', 'pipe']
     });
 
-    var cuketreeStdout = [];
-    var cuketreeStderr = [];
-
     cuketreeProcess.stdout.on('data', function(data) {
-      cuketreeStdout.push(data.toString());
+      grunt.log.oklns(data.toString());
     });
 
     cuketreeProcess.stderr.on('data', function(data) {
-      cuketreeStderr.push(data.toString());
+      grunt.log.errorlns(data.toString());
     });
 
     var finished = false;
 
     function error(msg) {
       grunt.log.error();
-      if (cuketreeStderr.length > 0) { grunt.log.errorlns(cuketreeStderr.join('')); }
       if (msg) { grunt.log.error(msg); }
     }
 
