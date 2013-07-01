@@ -1,7 +1,7 @@
 {
   "name": "grunt-cuke-tree",
   "description": "Run cucumber tests via cuke-tree",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "homepage": "https://github.com/simondean/grunt-cuke-tree",
   "author": {
     "name": "Simon Dean",
@@ -44,6 +44,6 @@
     "cuketree"
   ],
   "dependencies": {
-    "cuke-tree": "~0.2.16"
+    "cuke-tree": "~0.2.17"
   }
 }
