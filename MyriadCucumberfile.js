@@ -1,9 +1,8 @@
 module.exports = {
   package: '.',
-  features: ['features'],
   profiles: {
     default: {
-      bin: './node_modules/.bin/cucumber-js',
+      bin: './monkey_patches/.bin/cucumber-js',
       args: ['-format', 'json', '-t', '@noop-1']
     }
   }

@@ -1,6 +1,7 @@
 'use strict';
 
-var grunt = require('grunt');
+var Grunt = require('grunt');
+var Path = require('path');
 
 /*
   ======== A Handy Little Nodeunit Reference ========
@@ -22,6 +23,12 @@ var grunt = require('grunt');
     test.ifError(value)
 */
 
+function replaceTokensInReportJson(reportJson) {
+  return reportJson
+    .replace(/\{\{workingDirectory\}\}/g, process.cwd().replace(/\\/g, '\\\\'))
+    .replace(/\{\{fileSeparator\}\}/g, Path.sep.replace(/\\/g, '\\\\'));
+}
+
 exports.cuketree = {
   setUp: function(done) {
     // setup here if necessary
@@ -30,18 +37,20 @@ exports.cuketree = {
   default_options: function(test) {
     test.expect(3);
 
-    test.equal(grunt.file.exists('tmp/cucumber/default_report.js'), true, 'cucumber JSON report does not exist');
-    test.equal(grunt.file.read('tmp/cucumber/default_report.js'), grunt.file.read('test/expected/cucumber/default_report.js'), 'Content of cucumber JSON report does not match expected content');
-    test.equal(grunt.file.exists('tmp/cuketree/default_report/report.htm'), true, 'cuketree HTML report does not exist');
+    test.equal(Grunt.file.exists('tmp/cucumber/default_report.js'), true, 'cucumber JSON report does not exist');
+    var expectedReportJson = replaceTokensInReportJson(Grunt.file.read('test/expected/cucumber/default_report.js'));
+    test.equal(Grunt.file.read('tmp/cucumber/default_report.js'), expectedReportJson, 'Content of cucumber JSON report does not match expected content');
+    test.equal(Grunt.file.exists('tmp/cuketree/default_report/report.htm'), true, 'cuketree HTML report does not exist');
 
     test.done();
   },
   custom_options: function(test) {
     test.expect(3);
 
-    test.equal(grunt.file.exists('tmp/cucumber/custom_report.js'), true, 'cucumber JSON report does not exist');
-    test.equal(grunt.file.read('tmp/cucumber/custom_report.js'), grunt.file.read('test/expected/cucumber/custom_report.js'), 'Content of cucumber JSON report does not match expected content');
-    test.equal(grunt.file.exists('tmp/cuketree/custom_report/report.htm'), true, 'cuketree HTML report does not exist');
+    test.equal(Grunt.file.exists('tmp/cucumber/custom_report.js'), true, 'cucumber JSON report does not exist');
+    var expectedReportJson = replaceTokensInReportJson(Grunt.file.read('test/expected/cucumber/custom_report.js'));
+    test.equal(Grunt.file.read('tmp/cucumber/custom_report.js'), expectedReportJson, 'Content of cucumber JSON report does not match expected content');
+    test.equal(Grunt.file.exists('tmp/cuketree/custom_report/report.htm'), true, 'cuketree HTML report does not exist');
 
     test.done();
   },
