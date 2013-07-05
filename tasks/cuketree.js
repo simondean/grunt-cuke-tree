@@ -21,7 +21,7 @@ module.exports = function(grunt) {
     // Merge task-specific and/or target-specific options with these defaults.
     var options = this.options({});
 
-    var cuketreeBin = 'node_modules/.bin/cuketree';
+    var cuketreeBin = Path.resolve(__dirname, '../node_modules/.bin/cuketree');
     var cuketreeArgs = [];
 
     if (options.config) {
