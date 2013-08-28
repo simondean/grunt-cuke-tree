@@ -21,8 +21,25 @@ module.exports = function(grunt) {
     // Merge task-specific and/or target-specific options with these defaults.
     var options = this.options({});
 
-    var cuketreeBin = Path.resolve(__dirname, '../node_modules/.bin/cuketree');
-    var cuketreeArgs = [];
+    var possibleBinPaths = ['node_modules/.bin/cuketree', 'node_modules/grunt-cuke-tree/.bin/cuketree'];
+    var binPath = null;
+    
+    for (var i = 0; i < possibleBinPaths.length; i++) {
+      var possibleBinPath = possibleBinPaths[i];
+      
+      grunt.verbose.ok('Checking whether ' + possibleBinPath + ' exists');
+      if (grunt.file.exists(possibleBinPath)) {
+        grunt.verbose.ok('Found ' + possibleBinPath);
+        binPath = possibleBinPath;
+        break;
+      }
+    }
+    
+    if (!binPath) {
+      grunt.fail.warn('Failed to find cuketree bin');
+    }
+    
+    var cuketreeArgs = [binPath];
 
     if (options.config) {
       cuketreeArgs.push('-c');
@@ -32,10 +49,11 @@ module.exports = function(grunt) {
     // See https://github.com/joyent/node/issues/2318 for the reason that
     // cmd.exe has to be used on Windows
     if (OS.type() === 'Windows_NT') {
-      cuketreeArgs.unshift(cuketreeBin.replace(/\//g, '\\'));
-      cuketreeArgs = ['/c', cuketreeArgs.join(' ')];
-      cuketreeBin = 'cmd.exe';
+      cuketreeArgs[0] = cuketreeArgs[0].replace(/\//g, '\\');
+      cuketreeArgs = ['cmd.exe', '/c', cuketreeArgs.join(' ')];
     }
+    
+    var cuketreeBin = cuketreeArgs.shift();
 
     var cuketreeConfig = require(Path.resolve(options.config || 'default') + '.cukeTree.js');
 
